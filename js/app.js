@@ -63,6 +63,10 @@
     var links = [
       { label: 'Modelos', dropdown: CATALOG.categories.map(function (c) { return { label: c.name, href: '#/shop?cat=' + c.slug }; }) },
       { label: 'Bike Finder', href: '#/bike-finder' },
+      { label: 'Ferramentas', dropdown: [
+        { label: 'Comparador', href: '#/compare' },
+        { label: 'Guia de Tamanhos', href: '#/size-guide' }
+      ] },
       { label: 'Suporte', href: '#/support' },
       { label: 'Blog', href: '#/blog' }
     ];
@@ -319,7 +323,7 @@
     outlet.innerHTML =
       '<div class="support-page"><div class="section-inner"><span class="section-label">Suporte</span><h1 class="section-heading">Como podemos ajudar?</h1>' +
       '<div class="support-grid"><div class="support-card"><div class="support-card-icon">💬</div><h3>Chat Ao Vivo</h3><p>Resposta em menos de 2 minutos</p><button class="btn btn--link" id="chat-btn">Iniciar Chat</button></div>' +
-      '<div class="support-card"><div class="support-card-icon">📏</div><h3>Guia de Tamanhos</h3><p>Encontra o tamanho ideal para ti</p><a href="#" class="btn btn--link">Ver Tabela</a></div>' +
+      '<div class="support-card"><div class="support-card-icon">📏</div><h3>Guia de Tamanhos</h3><p>Encontra o tamanho ideal para ti</p><a href="#/size-guide" class="btn btn--link">Ver Tabela</a></div>' +
       '<div class="support-card"><div class="support-card-icon">🔧</div><h3>Manual do Proprietário</h3><p>Guias e manuais de todos os modelos</p><a href="#" class="btn btn--link">Descarregar</a></div>' +
       '<div class="support-card"><div class="support-card-icon">📍</div><h3>Localizador de Serviço</h3><p>Rede de assistência em mais de 100 países</p><a href="#" class="btn btn--link">Encontrar</a></div>' +
       '</div><div class="faq-section"><h2 class="section-heading" style="margin-top:80px">Perguntas Frequentes</h2><div class="faq-list" id="faq-list"></div></div></div></div>' +
@@ -410,6 +414,100 @@
     spans.forEach(function (w) { wo.observe(w); });
   }
 
+  /* ─── Comparison Tool ─── */
+
+  function renderCompare() {
+    outlet.innerHTML = '<div class="compare-page"><div class="section-inner"><span class="section-label">Comparador</span><h1 class="section-heading">Comparar Bicicletas</h1><p class="section-subtitle">Seleciona até 3 modelos para comparar lado a lado.</p>' +
+      '<div class="compare-selector" id="compare-selector"><select id="comp-sel-1"><option value="">Selecionar modelo...</option>' +
+      CATALOG.products.map(function (p) { return '<option value="' + p.id + '">' + p.name + '</option>'; }).join('') +
+      '</select><select id="comp-sel-2"><option value="">Selecionar modelo...</option>' +
+      CATALOG.products.map(function (p) { return '<option value="' + p.id + '">' + p.name + '</option>'; }).join('') +
+      '</select><select id="comp-sel-3"><option value="">Selecionar modelo...</option>' +
+      CATALOG.products.map(function (p) { return '<option value="' + p.id + '">' + p.name + '</option>'; }).join('') +
+      '</select></div><div class="compare-table-wrap" id="compare-table"></div></div></div>';
+
+    var sel1 = document.getElementById('comp-sel-1');
+    var sel2 = document.getElementById('comp-sel-2');
+    var sel3 = document.getElementById('comp-sel-3');
+
+    function updateCompare() {
+      var ids = [sel1.value, sel2.value, sel3.value].filter(function (v) { return v; });
+      var wrap = document.getElementById('compare-table');
+      if (!ids.length) { wrap.innerHTML = '<p style="text-align:center;color:var(--mid-gray);padding:60px 0;font-size:14px">Seleciona pelo menos 2 modelos para comparar.</p>'; return; }
+      var products = ids.map(function (id) { return CATALOG.products.filter(function (p) { return p.id === id; })[0]; }).filter(Boolean);
+      var allKeys = products.reduce(function (keys, p) {
+        Object.keys(p.specs).forEach(function (k) { if (keys.indexOf(k) === -1) keys.push(k); });
+        return keys;
+      }, []);
+
+      var html = '<table class="compare-table"><thead><tr><th></th>';
+      products.forEach(function (p) {
+        html += '<th><img src="assets/images/' + p.image + '" alt="' + p.name + '" style="width:100%;border-radius:12px;margin-bottom:8px"><h4>' + p.name + '</h4><p style="font-weight:600;font-size:1.1rem">' + p.price + '</p><a href="#/product/' + p.id + '" class="btn btn--link" style="font-size:12px">Ver Detalhes</a></th>';
+      });
+      html += '</tr></thead><tbody>';
+      html += '<tr><td>Categoria</td>' + products.map(function (p) { return '<td>' + (CATALOG.categories.filter(function (c) { return c.id === p.category; })[0] || {}).name + '</td>'; }).join('') + '</tr>';
+      html += '<tr><td>Avaliação</td>' + products.map(function (p) { return '<td>' + Array(Math.round(p.rating)).join('★') + ' ' + p.rating + '</td>'; }).join('') + '</tr>';
+      allKeys.forEach(function (key) {
+        html += '<tr><td>' + key.charAt(0).toUpperCase() + key.slice(1) + '</td>';
+        products.forEach(function (p) { html += '<td>' + (p.specs[key] || '—') + '</td>'; });
+        html += '</tr>';
+      });
+      html += '</tbody></table>';
+      wrap.innerHTML = html;
+    }
+
+    sel1.addEventListener('change', updateCompare);
+    sel2.addEventListener('change', updateCompare);
+    sel3.addEventListener('change', updateCompare);
+  }
+
+  /* ─── Size Guide ─── */
+
+  function renderSizeGuide() {
+    outlet.innerHTML = '<div class="size-guide-page"><div class="section-inner"><span class="section-label">Guia de Tamanhos</span><h1 class="section-heading">Encontra o teu tamanho</h1><p class="section-subtitle">Seleciona um modelo para ver a tabela de geometria e a altura recomendada.</p>' +
+      '<div class="sg-selector"><select id="sg-select"><option value="">Selecionar modelo...</option>' +
+      CATALOG.products.filter(function (p) { return p.sizes; }).map(function (p) { return '<option value="' + p.id + '">' + p.name + '</option>'; }).join('') +
+      '</select></div><div class="sg-height-input"><label>Altura (cm):</label><input type="range" id="sg-height" min="150" max="210" value="175"><span id="sg-height-display">175 cm</span></div>' +
+      '<div class="sg-result" id="sg-result"><p style="color:var(--mid-gray);font-size:14px">Seleciona um modelo para ver as recomendações de tamanho.</p></div>' +
+      '<div class="sg-table-wrap" id="sg-table"></div></div></div>';
+
+    var sel = document.getElementById('sg-select');
+    var heightInput = document.getElementById('sg-height');
+    var heightDisplay = document.getElementById('sg-height-display');
+    var result = document.getElementById('sg-result');
+    var table = document.getElementById('sg-table');
+
+    function updateSG() {
+      var id = sel.value;
+      heightDisplay.textContent = heightInput.value + ' cm';
+      if (!id) { result.innerHTML = '<p style="color:var(--mid-gray);font-size:14px">Seleciona um modelo para ver as recomendações.</p>'; table.innerHTML = ''; return; }
+      var p = CATALOG.products.filter(function (pr) { return pr.id === id; })[0];
+      if (!p || !p.sizes) return;
+
+      var height = parseInt(heightInput.value, 10);
+      var recommended = null;
+      p.sizes.forEach(function (s) {
+        var parts = s.height.replace('m', '').split('-');
+        var min = parseFloat(parts[0]) * 100;
+        var max = parseFloat(parts[1]) * 100;
+        if (height >= min && height <= max) recommended = s;
+      });
+
+      result.innerHTML = recommended
+        ? '<div class="sg-recommend"><span class="sg-badge">' + recommended.size + '</span><div><strong>Tamanho recomendado:</strong> ' + recommended.size + ' (' + recommended.height + ')</div></div>'
+        : '<p style="color:var(--mid-gray);font-size:14px">Nenhum tamanho disponível para esta altura neste modelo.</p>';
+
+      table.innerHTML = '<table class="sg-table"><thead><tr><th>Tamanho</th><th>Altura</th><th>Reach (mm)</th><th>Stack (mm)</th><th>Top Tube (mm)</th></tr></thead><tbody>' +
+        p.sizes.map(function (s) {
+          return '<tr class="' + (recommended && s.size === recommended.size ? 'recommended' : '') + '"><td>' + s.size + '</td><td>' + s.height + '</td><td>' + s.reach + '</td><td>' + s.stack + '</td><td>' + s.tTube + '</td></tr>';
+        }).join('') +
+        '</tbody></table>';
+    }
+
+    sel.addEventListener('change', updateSG);
+    heightInput.addEventListener('input', updateSG);
+  }
+
   /* ─── Routes ─── */
   route('/', renderHome);
   route('/shop', renderShop);
@@ -417,6 +515,8 @@
   route('/cart', renderCart);
   route('/checkout', renderCheckout);
   route('/bike-finder', renderBikeFinder);
+  route('/compare', renderCompare);
+  route('/size-guide', renderSizeGuide);
   route('/support', renderSupport);
   route('/blog', renderBlog);
   route('/account', renderAccount);

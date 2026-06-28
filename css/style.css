@@ -287,6 +287,40 @@ section { min-height: 100vh; display: flex; align-items: center; justify-content
 .blog-card-body p { font-size: 13px; color: var(--mid-gray); line-height: 1.6; margin-bottom: 12px; }
 .blog-author { font-size: 12px; font-weight: 500; color: var(--dark-gray); }
 
+/* ─── Comparison ─── */
+
+.compare-page { padding: 60px 24px 100px; text-align: center; }
+.compare-selector { display: flex; gap: 12px; justify-content: center; margin: 40px 0; flex-wrap: wrap; }
+.compare-selector select { padding: 12px 16px; border: 1px solid #d2d2d7; border-radius: 12px; font-size: 13px; font-family: var(--font); min-width: 200px; background: var(--white); cursor: pointer; }
+.compare-selector select:focus { border-color: var(--dark-gray); outline: none; }
+.compare-table-wrap { overflow-x: auto; }
+.compare-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 24px; }
+.compare-table th, .compare-table td { padding: 14px 16px; border-bottom: 1px solid #f0f0f0; text-align: center; vertical-align: top; }
+.compare-table th { font-weight: 600; font-size: 14px; min-width: 180px; }
+.compare-table th img { max-height: 160px; object-fit: contain; }
+.compare-table th h4 { margin-top: 8px; font-size: 1rem; }
+.compare-table td:first-child { text-align: left; font-weight: 500; color: var(--mid-gray); background: var(--light-gray); position: sticky; left: 0; }
+.compare-table tr:hover td { background: #fafafa; }
+.compare-table tr:hover td:first-child { background: #eee; }
+
+/* ─── Size Guide ─── */
+
+.size-guide-page { padding: 60px 24px 100px; text-align: center; }
+.sg-selector { margin: 40px 0 24px; }
+.sg-selector select { padding: 12px 20px; border: 1px solid #d2d2d7; border-radius: 12px; font-size: 14px; font-family: var(--font); min-width: 280px; cursor: pointer; }
+.sg-selector select:focus { border-color: var(--dark-gray); outline: none; }
+.sg-height-input { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 32px; font-size: 14px; color: var(--mid-gray); }
+.sg-height-input input[type="range"] { width: 200px; accent-color: var(--accent); }
+#sg-height-display { font-weight: 600; color: var(--dark-gray); min-width: 50px; }
+.sg-result { margin-bottom: 32px; display: flex; justify-content: center; }
+.sg-recommend { display: flex; align-items: center; gap: 12px; background: var(--light-gray); padding: 16px 24px; border-radius: 12px; font-size: 14px; }
+.sg-badge { width: 44px; height: 44px; background: var(--accent); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; }
+.sg-table { width: 100%; max-width: 600px; margin: 0 auto; border-collapse: collapse; font-size: 14px; }
+.sg-table th, .sg-table td { padding: 12px 16px; border-bottom: 1px solid #f0f0f0; text-align: center; }
+.sg-table th { font-weight: 600; color: var(--mid-gray); font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+.sg-table tr.recommended { background: rgba(227,71,38,0.06); font-weight: 600; }
+.sg-table tr.recommended td:first-child { color: var(--accent); }
+
 /* ─── Account ─── */
 
 .account-page { padding: 60px 24px; }

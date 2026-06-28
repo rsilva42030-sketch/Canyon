@@ -162,21 +162,60 @@
   /* ─── Page Renders ─── */
 
   function renderHome() {
-    outlet.innerHTML =
-      '<section id="hero"><div class="hero-content"><div class="hero-image-wrapper animate-in-scale"><img src="assets/images/hero.jpg" alt="Canyon" class="hero-image" loading="eager"></div><div class="hero-headline-group"><h1 class="hero-title">Engineered to Perform</h1><p class="hero-subtitle">Bicicletas de classe mundial. Direto a ti.</p><div class="hero-cta"><a href="#/shop" class="btn">Explorar Modelos</a></div></div></div><div class="scroll-indicator" aria-hidden="true"><div class="scroll-chevron"></div></div></section>' +
-      '<section id="brand"><div class="section-inner"><p class="brand-text">Cada detalhe. Cada fibra de carbono. Cada ângulo. Projetado para uma única coisa — performance pura.</p></div></section>' +
+    var sections = [];
+
+    sections.push(
+      '<section id="hero"><div class="hero-content"><div class="hero-image-wrapper animate-in-scale"><img src="assets/images/hero.jpg" alt="Canyon" class="hero-image" loading="eager"></div><div class="hero-headline-group"><h1 class="hero-title">Engineered to Perform</h1><p class="hero-subtitle">Bicicletas de classe mundial. Direto a ti.</p><div class="hero-cta"><a href="#/shop" class="btn">Explorar Modelos</a><a href="#/bike-finder" class="btn btn--outline">Encontrar a Minha Bike</a></div></div></div><div class="scroll-indicator" aria-hidden="true"><div class="scroll-chevron"></div></div></section>'
+    );
+
+    sections.push(
+      '<section id="home-categories"><div class="section-inner"><span class="section-label animate-in">Categorias</span><h2 class="section-heading animate-in d1">Explora por tipo de bicicleta</h2><div class="cat-grid">' +
+        CATALOG.categories.map(function (c, i) {
+          var images = { road: 'road.jpg', mtb: 'mtb.jpg', gravel: 'gravel.jpg', electric: 'electric.jpg', urban: 'urban.jpg', outlet: 'outlet.jpg' };
+          return '<a href="#/shop?cat=' + c.slug + '" class="cat-card animate-in d' + (i + 1) + '"><div class="cat-card-image"><img src="assets/images/' + (images[c.slug] || 'road.jpg') + '" alt="' + c.name + '" loading="lazy"></div><div class="cat-card-body"><h3>' + c.name + '</h3><span class="cat-card-link">Ver modelos →</span></div></a>';
+        }).join('') +
+      '</div></div></section>'
+    );
+
+    sections.push(
+      '<section id="brand"><div class="section-inner"><p class="brand-text">Cada detalhe. Cada fibra de carbono. Cada ângulo. Projetado para uma única coisa — performance pura.</p></div></section>'
+    );
+
+    sections.push(
       '<section id="features" style="min-height:auto;padding:100px 24px"><div class="section-inner"><span class="section-label animate-in">Porquê Canyon</span><h2 class="section-heading animate-in d1">Performance sem compromissos</h2><div class="features-grid">' +
       '<div class="feature-card animate-in d2"><div class="feature-icon">' + svgTruck() + '</div><h3>Entrega Rápida</h3><p>Envio para mais de 100 países com tracking em tempo real</p></div>' +
       '<div class="feature-card animate-in d3"><div class="feature-icon">' + svgShield() + '</div><h3>Garantia 6 Anos</h3><p>Quadros com garantia alargada e suporte técnico global</p></div>' +
       '<div class="feature-card animate-in d4"><div class="feature-icon">' + svgReturn() + '</div><h3>30 Dias para Testar</h3><p>Experimenta em casa. Se não for perfeita, devolvemos tudo.</p></div>' +
-      '</div></div></section>' +
+      '</div></div></section>'
+    );
+
+    sections.push(
       '<section id="counters"><div class="section-inner"><div class="counters-grid">' +
       '<div class="counter-item animate-in"><span class="counter-number" data-target="6.8">0</span><span class="counter-unit">kg</span><p class="counter-label">Peso mínimo (Aeroad CF SLX)</p></div>' +
       '<div class="counter-item animate-in d1"><span class="counter-number" data-target="100">0</span><span class="counter-unit">+ países</span><p class="counter-label">Com entrega direta e suporte local</p></div>' +
       '<div class="counter-item animate-in d2"><span class="counter-number" data-target="2002">0</span><span class="counter-unit"></span><p class="counter-label">Ano de fundação</p></div>' +
       '<div class="counter-item animate-in d3"><span class="counter-number" data-target="24">0</span><span class="counter-unit">+ anos</span><p class="counter-label">De inovação em carbono</p></div>' +
-      '</div></div></section>' +
-      '<section id="home-products" style="min-height:auto;padding:0 24px 100px"><div class="section-inner"><span class="section-label animate-in">Destaques</span><h2 class="section-heading animate-in d1">Modelos em Destaque</h2><div class="product-grid" id="featured-grid"></div></div></section>';
+      '</div></div></section>'
+    );
+
+    sections.push(
+      '<section id="home-testimonials" style="padding:100px 24px;background:var(--light-gray)"><div class="section-inner"><span class="section-label animate-in">Opiniões</span><h2 class="section-heading animate-in d1">O que dizem os nossos clientes</h2><div class="testimonials-grid">' +
+      CATALOG.testimonials.map(function (t, i) {
+        var stars = Array(Math.round(5 - (i * 0.3)) + 1).join(svgStar());
+        return '<div class="testimonial-card animate-in d' + (i + 1) + '"><div class="testimonial-stars">' + stars + '</div><p>"' + t.text + '"</p><div class="testimonial-author"><strong>' + t.author + '</strong><span>' + t.role + '</span></div></div>';
+      }).join('') +
+      '</div></div></section>'
+    );
+
+    sections.push(
+      '<section id="home-products" style="min-height:auto;padding:100px 24px"><div class="section-inner"><span class="section-label animate-in">Destaques</span><h2 class="section-heading animate-in d1">Modelos em Destaque</h2><div class="product-grid" id="featured-grid"></div><div style="text-align:center;margin-top:48px"><a href="#/shop" class="btn">Ver Catálogo Completo</a></div></div></section>'
+    );
+
+    sections.push(
+      '<section id="home-blog" style="padding:100px 24px;background:var(--white)"><div class="section-inner"><span class="section-label animate-in">Blog</span><h2 class="section-heading animate-in d1">Novidades Canyon</h2><div class="blog-grid" id="home-blog-grid"></div><div style="text-align:center;margin-top:48px"><a href="#/blog" class="btn btn--link">Ver todos os artigos</a></div></div></section>'
+    );
+
+    outlet.innerHTML = sections.join('');
 
     brandReveal();
     animateCounters();
@@ -189,6 +228,16 @@
     document.querySelectorAll('#home-products .product-card').forEach(function (card, i) {
       setTimeout(function () { card.classList.add('visible'); }, i * 100);
     });
+
+    var blogGrid = document.getElementById('home-blog-grid');
+    if (blogGrid) {
+      CATALOG.blog.slice(0, 3).forEach(function (post) {
+        var card = document.createElement('div');
+        card.className = 'blog-card';
+        card.innerHTML = '<div class="blog-card-image"><img src="assets/images/' + post.image + '" alt="' + post.title + '" loading="lazy"></div><div class="blog-card-body"><div class="blog-meta"><span>' + post.date + '</span><span>' + post.readTime + '</span></div><h3>' + post.title + '</h3><p>' + post.excerpt + '</p><div class="blog-author">' + post.author + '</div></div>';
+        blogGrid.appendChild(card);
+      });
+    }
   }
 
   function renderShop(params) {

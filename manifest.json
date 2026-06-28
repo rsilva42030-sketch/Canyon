@@ -1,0 +1,15 @@
+{
+  "name": "Canyon — Engineered to Perform",
+  "short_name": "Canyon",
+  "description": "Bicicletas de classe mundial. Performance pura.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#FFFFFF",
+  "theme_color": "#1D1D1F",
+  "categories": ["sports", "shopping"],
+  "icons": [
+    { "src": "/Canyon_logo.svg", "sizes": "1200x800", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

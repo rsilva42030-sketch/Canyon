@@ -40,6 +40,7 @@
     updateActiveNav();
     var main = document.getElementById('main');
     if (main) main.scrollTop = 0;
+    setTimeout(observeAnimations, 50);
   }
 
   window.addEventListener('hashchange', resolve);
@@ -156,14 +157,14 @@
 
   function renderHome() {
     outlet.innerHTML =
-      '<section id="hero"><div class="hero-content"><div class="hero-image-wrapper"><img src="assets/images/hero.jpg" alt="Canyon" class="hero-image" loading="eager"></div><div class="hero-headline-group"><h1 class="hero-title">Engineered to Perform</h1><p class="hero-subtitle">Bicicletas de classe mundial. Direto a ti.</p><div class="hero-cta"><a href="#/shop" class="btn">Explorar Modelos</a></div></div></div><div class="scroll-indicator" aria-hidden="true"><div class="scroll-chevron"></div></div></section>' +
+      '<section id="hero"><div class="hero-content"><div class="hero-image-wrapper animate-in-scale"><img src="assets/images/hero.jpg" alt="Canyon" class="hero-image" loading="eager"></div><div class="hero-headline-group"><h1 class="hero-title">Engineered to Perform</h1><p class="hero-subtitle">Bicicletas de classe mundial. Direto a ti.</p><div class="hero-cta"><a href="#/shop" class="btn">Explorar Modelos</a></div></div></div><div class="scroll-indicator" aria-hidden="true"><div class="scroll-chevron"></div></div></section>' +
       '<section id="brand"><div class="section-inner"><p class="brand-text">Cada detalhe. Cada fibra de carbono. Cada ângulo. Projetado para uma única coisa — performance pura.</p></div></section>' +
-      '<section id="features" style="min-height:auto;padding:100px 24px"><div class="section-inner"><span class="section-label">Porquê Canyon</span><h2 class="section-heading">Performance sem compromissos</h2><div class="features-grid">' +
-      '<div class="feature-card"><div class="feature-icon">' + svgTruck() + '</div><h3>Entrega Rápida</h3><p>Envio para mais de 100 países com tracking em tempo real</p></div>' +
-      '<div class="feature-card"><div class="feature-icon">' + svgShield() + '</div><h3>Garantia 6 Anos</h3><p>Quadros com garantia alargada e suporte técnico global</p></div>' +
-      '<div class="feature-card"><div class="feature-icon">' + svgReturn() + '</div><h3>30 Dias para Testar</h3><p>Experimenta em casa. Se não for perfeita, devolvemos tudo.</p></div>' +
+      '<section id="features" style="min-height:auto;padding:100px 24px"><div class="section-inner"><span class="section-label animate-in">Porquê Canyon</span><h2 class="section-heading animate-in d1">Performance sem compromissos</h2><div class="features-grid">' +
+      '<div class="feature-card animate-in d2"><div class="feature-icon">' + svgTruck() + '</div><h3>Entrega Rápida</h3><p>Envio para mais de 100 países com tracking em tempo real</p></div>' +
+      '<div class="feature-card animate-in d3"><div class="feature-icon">' + svgShield() + '</div><h3>Garantia 6 Anos</h3><p>Quadros com garantia alargada e suporte técnico global</p></div>' +
+      '<div class="feature-card animate-in d4"><div class="feature-icon">' + svgReturn() + '</div><h3>30 Dias para Testar</h3><p>Experimenta em casa. Se não for perfeita, devolvemos tudo.</p></div>' +
       '</div></div></section>' +
-      '<section id="home-products" style="min-height:auto;padding:0 24px 100px"><div class="section-inner"><span class="section-label">Destaques</span><h2 class="section-heading">Modelos em Destaque</h2><div class="product-grid" id="featured-grid"></div></div></section>';
+      '<section id="home-products" style="min-height:auto;padding:0 24px 100px"><div class="section-inner"><span class="section-label animate-in">Destaques</span><h2 class="section-heading animate-in d1">Modelos em Destaque</h2><div class="product-grid" id="featured-grid"></div></div></section>';
 
     brandReveal();
 
@@ -181,8 +182,8 @@
     var cat = params.cat || 'all';
     var filtered = cat === 'all' ? CATALOG.products : CATALOG.products.filter(function (p) { return p.category === cat; });
     outlet.innerHTML =
-      '<div class="shop-page"><div class="section-inner"><div class="shop-header"><span class="section-label">Catálogo</span><h1 class="section-heading">' + (cat === 'all' ? 'Todas as Bicicletas' : (CATALOG.categories.filter(function (c) { return c.slug === cat; })[0] || {}).name) + '</h1></div>' +
-      '<div class="shop-controls"><div class="shop-categories" id="shop-cats">' +
+      '<div class="shop-page"><div class="section-inner"><div class="shop-header"><span class="section-label animate-in">Catálogo</span><h1 class="section-heading animate-in d1">' + (cat === 'all' ? 'Todas as Bicicletas' : (CATALOG.categories.filter(function (c) { return c.slug === cat; })[0] || {}).name) + '</h1></div>' +
+      '<div class="shop-controls animate-in d2"><div class="shop-categories" id="shop-cats">' +
       '<button class="cat-btn' + (cat === 'all' ? ' active' : '') + '" data-cat="all">Todas</button>' +
       CATALOG.categories.map(function (c) { return '<button class="cat-btn' + (cat === c.slug ? ' active' : '') + '" data-cat="' + c.slug + '">' + c.name + '</button>'; }).join('') +
       '</div></div><div class="product-grid" id="shop-grid"></div></div></div>';
@@ -208,14 +209,14 @@
     if (!p) { outlet.innerHTML = '<div class="section-inner" style="text-align:center;padding:100px 24px"><h2>Produto não encontrado</h2><a href="#/shop" class="btn" style="margin-top:20px">Ver Catálogo</a></div>'; return; }
 
     outlet.innerHTML =
-      '<div class="product-detail"><div class="section-inner"><a href="#/shop" class="back-link">← Voltar ao catálogo</a><div class="pd-layout"><div class="pd-image"><img src="assets/images/' + p.image + '" alt="' + p.name + '"></div><div class="pd-info">' +
-      '<span class="section-label">' + (CATALOG.categories.filter(function (c) { return c.id === p.category; })[0] || {}).name + '</span>' +
-      '<h1 class="pd-title">' + p.name + '</h1>' +
-      '<p class="pd-tagline">' + p.tagline + '</p>' +
-      '<div class="pd-rating">' + Array(Math.round(p.rating)).join(svgStar()) + ' <span>' + p.rating + '</span></div>' +
-      '<div class="pd-price"><span class="current">' + p.price + '</span>' + (p.oldPrice ? '<span class="old">' + p.oldPrice + '</span>' : '') + '</div>' +
-      '<button class="btn pd-add-btn" data-id="' + p.id + '">Adicionar ao Carrinho</button>' +
-      '<div class="pd-specs"><h3>Especificações</h3><table>' + Object.keys(p.specs).map(function (k) { return '<tr><td>' + k.charAt(0).toUpperCase() + k.slice(1) + '</td><td>' + p.specs[k] + '</td></tr>'; }).join('') + '</table></div>' +
+      '<div class="product-detail"><div class="section-inner"><a href="#/shop" class="back-link animate-in">← Voltar ao catálogo</a><div class="pd-layout"><div class="pd-image animate-in-scale"><img src="assets/images/' + p.image + '" alt="' + p.name + '"></div><div class="pd-info">' +
+      '<span class="section-label animate-in">' + (CATALOG.categories.filter(function (c) { return c.id === p.category; })[0] || {}).name + '</span>' +
+      '<h1 class="pd-title animate-in d1">' + p.name + '</h1>' +
+      '<p class="pd-tagline animate-in d2">' + p.tagline + '</p>' +
+      '<div class="pd-rating animate-in d3">' + Array(Math.round(p.rating)).join(svgStar()) + ' <span>' + p.rating + '</span></div>' +
+      '<div class="pd-price animate-in d3"><span class="current">' + p.price + '</span>' + (p.oldPrice ? '<span class="old">' + p.oldPrice + '</span>' : '') + '</div>' +
+      '<button class="btn pd-add-btn animate-in d4" data-id="' + p.id + '">Adicionar ao Carrinho</button>' +
+      '<div class="pd-specs animate-in d5"><h3>Especificações</h3><table>' + Object.keys(p.specs).map(function (k) { return '<tr><td>' + k.charAt(0).toUpperCase() + k.slice(1) + '</td><td>' + p.specs[k] + '</td></tr>'; }).join('') + '</table></div>' +
       '</div></div></div></div>';
 
     document.querySelector('.pd-add-btn').addEventListener('click', function () {
@@ -228,7 +229,7 @@
   function renderCart() {
     var items = Cart.get();
     if (!items.length) {
-      outlet.innerHTML = '<div class="cart-empty"><span class="section-label">Carrinho</span><h2 class="section-heading">O teu carrinho está vazio</h2><p>Explora o nosso catálogo e encontra a bicicleta perfeita para ti.</p><a href="#/shop" class="btn" style="margin-top:24px">Ver Catálogo</a></div>';
+      outlet.innerHTML = '<div class="cart-empty"><span class="section-label animate-in">Carrinho</span><h2 class="section-heading animate-in d1">O teu carrinho está vazio</h2><p class="animate-in d2">Explora o nosso catálogo e encontra a bicicleta perfeita para ti.</p><a href="#/shop" class="btn animate-in d3" style="margin-top:24px">Ver Catálogo</a></div>';
       return;
     }
 
@@ -267,7 +268,7 @@
   function renderCheckout() {
     if (!Cart.get().length) { navigate('/cart'); return; }
     outlet.innerHTML =
-      '<div class="checkout-page"><div class="section-inner"><span class="section-label">Checkout</span><h1 class="section-heading">Finalizar Encomenda</h1><div class="checkout-layout"><form class="checkout-form" id="checkout-form"><div class="checkout-section"><h3>Informações de Envio</h3><input type="text" placeholder="Nome completo" required><input type="email" placeholder="Email" required><input type="tel" placeholder="Telemóvel" required><input type="text" placeholder="Morada" required><div class="form-row"><input type="text" placeholder="Código Postal" required><input type="text" placeholder="Cidade" required></div></div><div class="checkout-section"><h3>Pagamento</h3><div class="payment-option selected"><span>💳 Cartão de Crédito</span></div><div class="payment-option"><span>📱 MB Way</span></div><div class="payment-option"><span>🏦 Transferência Bancária</span></div></div><button type="submit" class="btn" style="width:100%;justify-content:center">Confirmar Encomenda</button></form><div class="checkout-summary"><h3>Resumo</h3><div id="checkout-items"></div><div class="checkout-total"><span>Total</span><span id="checkout-total-price">€0</span></div></div></div></div></div>';
+      '<div class="checkout-page"><div class="section-inner"><span class="section-label animate-in">Checkout</span><h1 class="section-heading animate-in d1">Finalizar Encomenda</h1><div class="checkout-layout"><form class="checkout-form" id="checkout-form"><div class="checkout-section"><h3>Informações de Envio</h3><input type="text" placeholder="Nome completo" required><input type="email" placeholder="Email" required><input type="tel" placeholder="Telemóvel" required><input type="text" placeholder="Morada" required><div class="form-row"><input type="text" placeholder="Código Postal" required><input type="text" placeholder="Cidade" required></div></div><div class="checkout-section"><h3>Pagamento</h3><div class="payment-option selected"><span>💳 Cartão de Crédito</span></div><div class="payment-option"><span>📱 MB Way</span></div><div class="payment-option"><span>🏦 Transferência Bancária</span></div></div><button type="submit" class="btn" style="width:100%;justify-content:center">Confirmar Encomenda</button></form><div class="checkout-summary"><h3>Resumo</h3><div id="checkout-items"></div><div class="checkout-total"><span>Total</span><span id="checkout-total-price">€0</span></div></div></div></div></div>';
 
     var total = Cart.total(CATALOG.products);
     document.getElementById('checkout-total-price').textContent = '€' + total.toFixed(2).replace('.', ',');
@@ -298,9 +299,9 @@
     function renderQuestion() {
       if (step >= questions.length) {
         var result = CATALOG.products.filter(function (p) { return p.featured; }).slice(0, 3);
-        outlet.innerHTML = '<div class="bike-finder-result"><span class="section-label">Bike Finder</span><h2 class="section-heading">A bicicleta ideal para ti</h2><div class="product-grid">' +
-          result.map(function (p) { return '<div class="product-card visible" onclick="location.hash=\'#/product/' + p.id + '\'"><div class="product-card-image"><img src="assets/images/' + p.image + '" alt="' + p.name + '"></div><h3>' + p.name + '</h3><p class="tagline">' + p.tagline + '</p><p style="font-weight:600;font-size:1.1rem">' + p.price + '</p></div>'; }).join('') +
-          '</div><a href="#/shop" class="btn" style="margin-top:32px">Ver Catálogo Completo</a><button class="btn btn--link" onclick="navigate(\'/bike-finder\')">Recomeçar</button></div>';
+        outlet.innerHTML = '<div class="bike-finder-result"><span class="section-label animate-in">Bike Finder</span><h2 class="section-heading animate-in d1">A bicicleta ideal para ti</h2><div class="product-grid">' +
+          result.map(function (p, i) { return '<div class="product-card animate-in d' + (i + 2) + '" onclick="location.hash=\'#/product/' + p.id + '\'"><div class="product-card-image"><img src="assets/images/' + p.image + '" alt="' + p.name + '"></div><h3>' + p.name + '</h3><p class="tagline">' + p.tagline + '</p><p style="font-weight:600;font-size:1.1rem">' + p.price + '</p></div>'; }).join('') +
+          '</div><a href="#/shop" class="btn animate-in d5" style="margin-top:32px">Ver Catálogo Completo</a><button class="btn btn--link animate-in d5" onclick="navigate(\'/bike-finder\')">Recomeçar</button></div>';
         return;
       }
 
@@ -321,7 +322,7 @@
 
   function renderSupport() {
     outlet.innerHTML =
-      '<div class="support-page"><div class="section-inner"><span class="section-label">Suporte</span><h1 class="section-heading">Como podemos ajudar?</h1>' +
+      '<div class="support-page"><div class="section-inner"><span class="section-label animate-in">Suporte</span><h1 class="section-heading animate-in d1">Como podemos ajudar?</h1>' +
       '<div class="support-grid"><div class="support-card"><div class="support-card-icon">💬</div><h3>Chat Ao Vivo</h3><p>Resposta em menos de 2 minutos</p><button class="btn btn--link" id="chat-btn">Iniciar Chat</button></div>' +
       '<div class="support-card"><div class="support-card-icon">📏</div><h3>Guia de Tamanhos</h3><p>Encontra o tamanho ideal para ti</p><a href="#/size-guide" class="btn btn--link">Ver Tabela</a></div>' +
       '<div class="support-card"><div class="support-card-icon">🔧</div><h3>Manual do Proprietário</h3><p>Guias e manuais de todos os modelos</p><a href="#" class="btn btn--link">Descarregar</a></div>' +
@@ -357,7 +358,7 @@
   }
 
   function renderBlog() {
-    outlet.innerHTML = '<div class="blog-page"><div class="section-inner"><span class="section-label">Blog</span><h1 class="section-heading">Inside Canyon</h1><p class="section-subtitle">Histórias, tecnologia e paixão pelo ciclismo.</p><div class="blog-grid" id="blog-grid"></div></div></div>';
+    outlet.innerHTML = '<div class="blog-page"><div class="section-inner"><span class="section-label animate-in">Blog</span><h1 class="section-heading animate-in d1">Inside Canyon</h1><p class="section-subtitle animate-in d2">Histórias, tecnologia e paixão pelo ciclismo.</p><div class="blog-grid" id="blog-grid"></div></div></div>';
     var grid = document.getElementById('blog-grid');
     CATALOG.blog.forEach(function (post) {
       var card = el('div', { className: 'blog-card' });
@@ -417,7 +418,7 @@
   /* ─── Comparison Tool ─── */
 
   function renderCompare() {
-    outlet.innerHTML = '<div class="compare-page"><div class="section-inner"><span class="section-label">Comparador</span><h1 class="section-heading">Comparar Bicicletas</h1><p class="section-subtitle">Seleciona até 3 modelos para comparar lado a lado.</p>' +
+    outlet.innerHTML = '<div class="compare-page"><div class="section-inner"><span class="section-label animate-in">Comparador</span><h1 class="section-heading animate-in d1">Comparar Bicicletas</h1><p class="section-subtitle animate-in d2">Seleciona até 3 modelos para comparar lado a lado.</p>' +
       '<div class="compare-selector" id="compare-selector"><select id="comp-sel-1"><option value="">Selecionar modelo...</option>' +
       CATALOG.products.map(function (p) { return '<option value="' + p.id + '">' + p.name + '</option>'; }).join('') +
       '</select><select id="comp-sel-2"><option value="">Selecionar modelo...</option>' +
@@ -464,7 +465,7 @@
   /* ─── Size Guide ─── */
 
   function renderSizeGuide() {
-    outlet.innerHTML = '<div class="size-guide-page"><div class="section-inner"><span class="section-label">Guia de Tamanhos</span><h1 class="section-heading">Encontra o teu tamanho</h1><p class="section-subtitle">Seleciona um modelo para ver a tabela de geometria e a altura recomendada.</p>' +
+    outlet.innerHTML = '<div class="size-guide-page"><div class="section-inner"><span class="section-label animate-in">Guia de Tamanhos</span><h1 class="section-heading animate-in d1">Encontra o teu tamanho</h1><p class="section-subtitle animate-in d2">Seleciona um modelo para ver a tabela de geometria e a altura recomendada.</p>' +
       '<div class="sg-selector"><select id="sg-select"><option value="">Selecionar modelo...</option>' +
       CATALOG.products.filter(function (p) { return p.sizes; }).map(function (p) { return '<option value="' + p.id + '">' + p.name + '</option>'; }).join('') +
       '</select></div><div class="sg-height-input"><label>Altura (cm):</label><input type="range" id="sg-height" min="150" max="210" value="175"><span id="sg-height-display">175 cm</span></div>' +
@@ -521,9 +522,26 @@
   route('/blog', renderBlog);
   route('/account', renderAccount);
 
+  /* ─── Scroll Animations ─── */
+  var animObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        animObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  function observeAnimations() {
+    document.querySelectorAll('.animate-in, .animate-in-scale').forEach(function (el) {
+      animObserver.observe(el);
+    });
+  }
+
   /* ─── Init ─── */
   renderNav();
   renderFooter();
+  observeAnimations();
 
   var navbar = document.querySelector('.navbar');
   if (navbar) {

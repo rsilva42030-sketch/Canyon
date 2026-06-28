@@ -165,7 +165,7 @@
     var sections = [];
 
     sections.push(
-      '<section id="hero"><div class="hero-content"><div class="hero-image-wrapper animate-in-scale"><img src="assets/images/hero.jpg" alt="Canyon" class="hero-image" loading="eager"></div><div class="hero-headline-group"><h1 class="hero-title">Engineered to Perform</h1><p class="hero-subtitle">Bicicletas de classe mundial. Direto a ti.</p><div class="hero-cta"><a href="#/shop" class="btn">Explorar Modelos</a><a href="#/bike-finder" class="btn btn--outline">Encontrar a Minha Bike</a></div></div></div><div class="scroll-indicator" aria-hidden="true"><div class="scroll-chevron"></div></div></section>'
+      '<section id="hero"><div class="hero-image-wrapper"><img src="assets/images/hero.jpg" alt="Canyon" loading="eager"></div><div class="hero-content"><div class="hero-headline-group"><h1 class="hero-title">Engineered to Perform</h1><p class="hero-subtitle">Bicicletas de carbono alemãs, entregues diretamente na tua casa. Performance de classe mundial, sem intermediários.</p><div class="hero-value"><span>Envio grátis em 3-5 dias</span><span>Garantia de 6 anos</span><span>30 dias para testar</span></div><div class="hero-cta"><a href="#/shop" class="btn">Explorar Modelos</a><a href="#/bike-finder" class="btn btn--outline">Encontrar a Minha Bike</a></div></div></div><div class="scroll-indicator" aria-hidden="true"><div class="scroll-chevron"></div></div></section>'
     );
 
     sections.push(

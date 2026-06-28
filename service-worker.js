@@ -6,13 +6,13 @@ var URLS_TO_CACHE = [
   '/js/data.js',
   '/js/cart.js',
   '/js/app.js',
-  '/Canyon_logo.svg',
+  '/Canyon_logo.jpg',
   '/manifest.json',
-  '/assets/images/hero.svg',
-  '/assets/images/road.svg',
-  '/assets/images/mtb.svg',
-  '/assets/images/gravel.svg',
-  '/assets/images/parallax.svg'
+  '/assets/images/hero.jpg',
+  '/assets/images/road.jpg',
+  '/assets/images/mtb.jpg',
+  '/assets/images/gravel.jpg',
+  '/assets/images/parallax.jpg'
 ];
 
 self.addEventListener('install', function (event) {

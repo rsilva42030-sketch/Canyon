@@ -1,4 +1,4 @@
-var CACHE_NAME = 'canyon-v1';
+var CACHE_NAME = 'canyon-v2';
 var URLS_TO_CACHE = [
   '/',
   '/index.html',
@@ -6,16 +6,20 @@ var URLS_TO_CACHE = [
   '/js/data.js',
   '/js/cart.js',
   '/js/app.js',
-  '/Canyon_logo.jpg',
+  '/Canyon_logo.svg',
   '/manifest.json',
   '/assets/images/hero.jpg',
   '/assets/images/road.jpg',
   '/assets/images/mtb.jpg',
   '/assets/images/gravel.jpg',
+  '/assets/images/electric.jpg',
+  '/assets/images/urban.jpg',
+  '/assets/images/outlet.jpg',
   '/assets/images/parallax.jpg'
 ];
 
 self.addEventListener('install', function (event) {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then(function (cache) {
       return cache.addAll(URLS_TO_CACHE);

@@ -38,8 +38,7 @@
     currentRoute = matched;
     routes[matched](params);
     updateActiveNav();
-    var main = document.getElementById('main');
-    if (main) main.scrollTop = 0;
+    if (lenis) { lenis.scrollTo(0, { immediate: true }); } else { var main = document.getElementById('main'); if (main) main.scrollTop = 0; }
     setTimeout(observeAnimations, 50);
   }
 
@@ -165,7 +164,7 @@
     var sections = [];
 
     sections.push(
-      '<section id="hero"><div class="hero-image-wrapper"><img src="assets/images/hero.jpg" alt="Canyon" loading="eager"></div><div class="hero-content"><div class="hero-headline-group"><h1 class="hero-title">Engineered to Perform</h1><p class="hero-subtitle">Bicicletas de carbono alemãs, entregues diretamente na tua casa. Performance de classe mundial, sem intermediários.</p><div class="hero-value"><span>Envio grátis em 3-5 dias</span><span>Garantia de 6 anos</span><span>30 dias para testar</span></div><div class="hero-cta"><a href="#/shop" class="btn">Explorar Modelos</a><a href="#/bike-finder" class="btn btn--outline">Encontrar a Minha Bike</a></div></div></div><div class="scroll-indicator" aria-hidden="true"><div class="scroll-chevron"></div></div></section>'
+      '<section id="hero"><div class="hero-image-wrapper"><img src="assets/images/hero.jpg" alt="Canyon" loading="eager"></div><div class="hero-content"><div class="hero-headline-group"><h1 class="hero-title" id="hero-title">Engineered to Perform</h1><p class="hero-subtitle">Bicicletas de carbono alemãs, entregues diretamente na tua casa. Performance de classe mundial, sem intermediários.</p><div class="hero-value"><span>Envio grátis em 3-5 dias</span><span>Garantia de 6 anos</span><span>30 dias para testar</span></div><div class="hero-cta"><a href="#/shop" class="btn">Explorar Modelos</a><a href="#/bike-finder" class="btn btn--outline">Encontrar a Minha Bike</a></div></div></div><div class="scroll-indicator" aria-hidden="true"><div class="scroll-chevron"></div></div></section>'
     );
 
     sections.push(
@@ -217,6 +216,7 @@
 
     outlet.innerHTML = sections.join('');
 
+    heroWordReveal();
     brandReveal();
     animateCounters();
 
@@ -460,6 +460,17 @@
     return card;
   }
 
+  function heroWordReveal() {
+    var ht = document.getElementById('hero-title');
+    if (!ht) return;
+    var words = ht.textContent.trim().split(/\s+/);
+    ht.innerHTML = words.map(function (w) { return '<span class="word">' + w + '</span>'; }).join(' ');
+    var spans = ht.querySelectorAll('.word');
+    spans.forEach(function (w, i) {
+      setTimeout(function () { w.classList.add('revealed'); }, 200 + i * 200);
+    });
+  }
+
   function brandReveal() {
     var bt = document.querySelector('.brand-text');
     if (!bt) return;
@@ -625,16 +636,36 @@
     });
   }
 
+  /* ─── Lenis Smooth Scroll ─── */
+  var lenis = null;
+  if (typeof Lenis !== 'undefined') {
+    lenis = new Lenis({
+      duration: 1.1,
+      easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+      smoothWheel: true,
+      orientation: 'vertical'
+    });
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+  }
+
   /* ─── Init ─── */
   renderNav();
   renderFooter();
   observeAnimations();
 
   var navbar = document.querySelector('.navbar');
+  var heroImg = document.querySelector('.hero-image-wrapper img');
   if (navbar) {
-    window.addEventListener('scroll', function () {
-      navbar.classList.toggle('scrolled', window.scrollY > 80);
-    }, { passive: true });
+    var scrollHandler = function (pos) {
+      navbar.classList.toggle('scrolled', pos > 80);
+      if (heroImg) heroImg.style.transform = 'translateY(' + (pos * 0.15) + 'px) scale(1.05)';
+    };
+    if (lenis) {
+      lenis.on('scroll', function (e) { scrollHandler(e.scroll); });
+    } else {
+      window.addEventListener('scroll', function () { scrollHandler(window.scrollY); }, { passive: true });
+    }
   }
 
 })();

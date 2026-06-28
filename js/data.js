@@ -59,26 +59,41 @@ var CATALOG = {
       { size: 'L', height: '1.78-1.86m', reach: 389, stack: 575, tTube: 560 },
       { size: 'XL', height: '1.84-1.93m', reach: 396, stack: 590, tTube: 580 }
     ] },
-    { id: 'precede-on', name: 'Precede:ON', category: 'electric', tagline: 'E-power quotidiano', price: '5.999€', oldPrice: null, rating: 4.4, specs: { peso: '19.5 kg', motor: 'Bosch Performance CX', bateria: '750 Wh', autono: '120 km', travões: 'Magura MT5' }, image: 'road.jpg', featured: false, sizes: [
+    { id: 'precede-on', name: 'Precede:ON', category: 'electric', tagline: 'E-power quotidiano', price: '5.999€', oldPrice: null, rating: 4.4, specs: { peso: '19.5 kg', motor: 'Bosch Performance CX', bateria: '750 Wh', autono: '120 km', travões: 'Magura MT5' }, image: 'electric.jpg', featured: false, sizes: [
       { size: 'S', height: '1.62-1.72m', reach: 390, stack: 560, tTube: 530 },
       { size: 'M', height: '1.70-1.80m', reach: 400, stack: 575, tTube: 550 },
       { size: 'L', height: '1.78-1.88m', reach: 410, stack: 590, tTube: 570 }
     ] },
-    { id: 'commuter-on', name: 'Commuter:ON', category: 'electric', tagline: 'City speed', price: '4.499€', oldPrice: '4.999€', rating: 4.3, specs: { peso: '21.0 kg', motor: 'Bosch Performance Speed', bateria: '500 Wh', autono: '80 km', travões: 'Magura MT4' }, image: 'road.jpg', featured: false, sizes: [
+    { id: 'commuter-on', name: 'Commuter:ON', category: 'electric', tagline: 'City speed', price: '4.499€', oldPrice: '4.999€', rating: 4.3, specs: { peso: '21.0 kg', motor: 'Bosch Performance Speed', bateria: '500 Wh', autono: '80 km', travões: 'Magura MT4' }, image: 'electric.jpg', featured: false, sizes: [
       { size: 'S', height: '1.60-1.70m', reach: 380, stack: 550, tTube: 520 },
       { size: 'M', height: '1.68-1.78m', reach: 390, stack: 565, tTube: 540 },
       { size: 'L', height: '1.76-1.86m', reach: 400, stack: 580, tTube: 560 }
     ] },
-    { id: 'roadlite', name: 'Roadlite', category: 'urban', tagline: 'Leveza urbana', price: '1.299€', oldPrice: null, rating: 4.5, specs: { peso: '8.0 kg', quadro: 'Alumínio 6061', grupos: 'Shimano Altus', roda: 'Alexrims DP21', travões: 'Shimano MT200' }, image: 'road.jpg', featured: false, sizes: [
+    { id: 'roadlite', name: 'Roadlite', category: 'urban', tagline: 'Leveza urbana', price: '1.299€', oldPrice: null, rating: 4.5, specs: { peso: '8.0 kg', quadro: 'Alumínio 6061', grupos: 'Shimano Altus', roda: 'Alexrims DP21', travões: 'Shimano MT200' }, image: 'urban.jpg', featured: false, sizes: [
       { size: 'S', height: '1.60-1.70m', reach: 375, stack: 530, tTube: 520 },
       { size: 'M', height: '1.68-1.78m', reach: 385, stack: 545, tTube: 540 },
       { size: 'L', height: '1.76-1.86m', reach: 395, stack: 560, tTube: 560 },
       { size: 'XL', height: '1.84-1.94m', reach: 405, stack: 575, tTube: 580 }
     ] },
-    { id: 'commuter-6', name: 'Commuter 6', category: 'urban', tagline: 'City confiável', price: '999€', oldPrice: null, rating: 4.2, specs: { peso: '11.5 kg', quadro: 'Alumínio', grupos: 'Shimano Nexus', roda: 'Rodi rims', travões: 'Shimano MT200' }, image: 'road.jpg', featured: false, sizes: [
+    { id: 'commuter-6', name: 'Commuter 6', category: 'urban', tagline: 'City confiável', price: '999€', oldPrice: null, rating: 4.2, specs: { peso: '11.5 kg', quadro: 'Alumínio', grupos: 'Shimano Nexus', roda: 'Rodi rims', travões: 'Shimano MT200' }, image: 'urban.jpg', featured: false, sizes: [
       { size: 'S', height: '1.55-1.65m', reach: 365, stack: 525, tTube: 500 },
       { size: 'M', height: '1.63-1.73m', reach: 375, stack: 540, tTube: 520 },
       { size: 'L', height: '1.71-1.81m', reach: 385, stack: 555, tTube: 540 }
+    ] },
+    { id: 'aeroad-cf-slx-outlet', name: 'Aeroad CF SLX (Série Anterior)', category: 'outlet', tagline: 'Performance ao melhor preço', price: '4.999€', oldPrice: '6.499€', rating: 4.7, specs: { peso: '6.9 kg', quadro: 'Carbono monocoque', grupos: 'Shimano Ultegra Di2', roda: 'DT Swiss ARC 1100', travões: 'Shimano Ultegra hidráulicos' }, image: 'outlet.jpg', featured: true, badge: '-23%', sizes: [
+      { size: 'S', height: '1.71-1.78m', reach: 382, stack: 537, tTube: 540 },
+      { size: 'M', height: '1.77-1.84m', reach: 389, stack: 557, tTube: 560 },
+      { size: 'L', height: '1.83-1.90m', reach: 396, stack: 572, tTube: 580 }
+    ] },
+    { id: 'spectral-cf-outlet', name: 'Spectral CF (Série Anterior)', category: 'outlet', tagline: 'All-Mountain em promoção', price: '3.999€', oldPrice: '4.999€', rating: 4.8, specs: { peso: '13.6 kg', quadro: 'Carbono CF', suspensao: 'Fox 36 Float', roda: 'DT Swiss H 1900', travões: 'Shimano XT M8120' }, image: 'outlet.jpg', featured: true, badge: '-20%', sizes: [
+      { size: 'M', height: '1.68-1.78m', reach: 450, stack: 615, tTube: 420 },
+      { size: 'L', height: '1.76-1.86m', reach: 470, stack: 625, tTube: 450 },
+      { size: 'XL', height: '1.84-1.96m', reach: 490, stack: 635, tTube: 480 }
+    ] },
+    { id: 'endurace-cf-outlet', name: 'Endurace CF (Série Anterior)', category: 'outlet', tagline: 'Conforto com desconto', price: '2.499€', oldPrice: '3.299€', rating: 4.5, specs: { peso: '8.3 kg', quadro: 'Carbono CF', grupos: 'Shimano 105', roda: 'Fulcrum Racing 900', travões: 'Shimano 105 hidráulicos' }, image: 'outlet.jpg', featured: false, badge: '-24%', sizes: [
+      { size: 'S', height: '1.66-1.74m', reach: 365, stack: 540, tTube: 520 },
+      { size: 'M', height: '1.72-1.80m', reach: 372, stack: 555, tTube: 540 },
+      { size: 'L', height: '1.80-1.88m', reach: 379, stack: 570, tTube: 560 }
     ] }
   ],
 

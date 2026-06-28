@@ -144,6 +144,19 @@ section { min-height: 100vh; display: flex; align-items: center; justify-content
 .feature-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 8px; }
 .feature-card p { font-size: 14px; color: var(--mid-gray); line-height: 1.6; max-width: 300px; margin: 0 auto; }
 
+/* ─── Counters ─── */
+
+#counters { background: var(--black); padding: 100px 24px; color: var(--white); }
+#counters .section-inner { max-width: 1000px; }
+.counters-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center; }
+.counter-item { padding: 24px; }
+.counter-number { font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 800; letter-spacing: -0.03em; display: inline; color: var(--white); }
+.counter-unit { font-size: clamp(1.2rem, 2.5vw, 2rem); font-weight: 600; color: var(--mid-gray); margin-left: 4px; }
+.counter-label { font-size: 13px; color: var(--mid-gray); margin-top: 8px; line-height: 1.5; }
+@media (max-width: 834px) {
+  .counters-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
 /* ─── Buttons ─── */
 
 .btn { display: inline-flex; align-items: center; gap: 6px; padding: 11px 28px; font-family: var(--font); font-size: 14px; font-weight: 500; border: none; border-radius: 20px; cursor: pointer; transition: all 0.3s var(--ease-apple); background: var(--accent); color: var(--white); letter-spacing: 0.01em; }
@@ -356,6 +369,11 @@ section { min-height: 100vh; display: flex; align-items: center; justify-content
 .newsletter-form input { flex: 1; padding: 10px 14px; border: 1px solid #d2d2d7; border-radius: 8px; font-size: 12px; outline: none; font-family: var(--font); }
 .newsletter-form button { padding: 10px 16px; background: var(--dark-gray); color: var(--white); border: none; border-radius: 8px; font-size: 12px; font-weight: 500; cursor: pointer; transition: background 0.2s; font-family: var(--font); }
 .newsletter-form button:hover { background: var(--black); }
+
+.footer-lang-label { font-size: 12px; font-weight: 600; margin: 16px 0 8px; color: var(--dark-gray); }
+.footer-lang { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.footer-lang .lang-active { font-size: 12px; color: var(--dark-gray); font-weight: 500; }
+.footer-lang a { font-size: 12px; color: var(--mid-gray); }
 
 .footer-bottom { border-top: 1px solid #d2d2d7; padding-top: 24px; display: flex; justify-content: space-between; align-items: center; }
 .footer-logo svg { height: 18px; width: auto; opacity: 0.25; }

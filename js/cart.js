@@ -49,7 +49,7 @@ var Cart = (function () {
     var items = get();
     return items.reduce(function (sum, ci) {
       var p = products.filter(function (pr) { return pr.id === ci.id; });
-      if (p.length) sum += parseFloat(p[0].price.replace('€', '').replace(',', '.')) * ci.qty;
+      if (p.length) sum += parseFloat(p[0].price.replace('€', '').replace(/\./g, '').replace(',', '.')) * ci.qty;
       return sum;
     }, 0);
   }

@@ -63,13 +63,18 @@
 
     var links = [
       { label: 'Modelos', dropdown: CATALOG.categories.map(function (c) { return { label: c.name, href: '#/shop?cat=' + c.slug }; }) },
-      { label: 'Bike Finder', href: '#/bike-finder' },
       { label: 'Ferramentas', dropdown: [
         { label: 'Comparador', href: '#/compare' },
         { label: 'Guia de Tamanhos', href: '#/size-guide' }
       ] },
-      { label: 'Suporte', href: '#/support' },
-      { label: 'Blog', href: '#/blog' }
+      { label: 'Suporte', dropdown: [
+        { label: 'Centro de Ajuda', href: '#/support' },
+        { label: 'FAQ', href: '#/support' },
+        { label: 'Garantia', href: '#/support' },
+        { label: 'Devoluções', href: '#/support' }
+      ] },
+      { label: 'Blog', href: '#/blog' },
+      { label: 'Bike Finder', href: '#/bike-finder' }
     ];
 
     var ul = document.getElementById('nav-links');
@@ -121,11 +126,12 @@
     f.innerHTML = '<div class="footer-inner"><div class="footer-grid">' +
       colHTML('Modelos', CATALOG.categories.map(function (c) { return { label: c.name, href: '#/shop?cat=' + c.slug }; })) +
       colHTML('Suporte', [{ label: 'FAQ', href: '#/support' }, { label: 'Bike Finder', href: '#/bike-finder' }, { label: 'Tabela de Tamanhos', href: '#/support' }, { label: 'Garantia', href: '#/support' }, { label: 'Devoluções', href: '#/support' }]) +
-      colHTML('Empresa', [{ label: 'Sobre Nós', href: '#' }, { label: 'Blog', href: '#/blog' }, { label: 'Carreiras', href: '#' }, { label: 'CFR Team', href: '#' }, { label: 'Parceiros', href: '#' }]) +
-      colHTML('Legal', [{ label: 'Privacidade', href: '#' }, { label: 'Termos', href: '#' }, { label: 'Cookies', href: '#' }, { label: 'Impressum', href: '#' }, { label: 'Recalls', href: '#' }]) +
+      colHTML('Empresa', [{ label: 'Sobre Nós', href: '#/blog' }, { label: 'Blog', href: '#/blog' }, { label: 'Carreiras', href: '#/support' }, { label: 'CFR Team', href: '#/blog' }, { label: 'Parceiros', href: '#/support' }]) +
+      colHTML('Legal', [{ label: 'Privacidade', href: '#/support' }, { label: 'Termos', href: '#/support' }, { label: 'Cookies', href: '#/support' }, { label: 'Impressum', href: '#/support' }, { label: 'Recalls', href: '#/support' }]) +
       '<div class="footer-col"><h4>Seguir Canyon</h4><div class="social-links">' +
       svgSocial('instagram', '#') + svgSocial('youtube', '#') + svgSocial('facebook', '#') + svgSocial('strava', '#') + svgSocial('tiktok', '#') +
-      '</div><p class="footer-newsletter-label">Newsletter</p><form class="newsletter-form" id="newsletter-form"><input type="email" placeholder="O teu email" aria-label="Email para newsletter"><button type="submit">Subscrever</button></form></div>' +
+      '</div><p class="footer-newsletter-label">Newsletter</p><form class="newsletter-form" id="newsletter-form"><input type="email" placeholder="O teu email" aria-label="Email para newsletter"><button type="submit">Subscrever</button></form>' +
+      '<p class="footer-lang-label">País / Idioma</p><div class="footer-lang"><span class="lang-active">🇵🇹 Portugal (PT)</span> <a href="#">🌐 Outros países</a></div></div>' +
       '</div><div class="footer-bottom"><div class="footer-logo">' + logoHTML() + '</div><p class="footer-copy">&copy; 2026 Canyon Bicycles GmbH. Preços e especificações sujeitos a alteração.</p></div></div>';
 
     document.getElementById('newsletter-form') && document.getElementById('newsletter-form').addEventListener('submit', function (e) { e.preventDefault(); alert('Obrigado! Em breve receberás novidades.'); });
@@ -164,9 +170,16 @@
       '<div class="feature-card animate-in d3"><div class="feature-icon">' + svgShield() + '</div><h3>Garantia 6 Anos</h3><p>Quadros com garantia alargada e suporte técnico global</p></div>' +
       '<div class="feature-card animate-in d4"><div class="feature-icon">' + svgReturn() + '</div><h3>30 Dias para Testar</h3><p>Experimenta em casa. Se não for perfeita, devolvemos tudo.</p></div>' +
       '</div></div></section>' +
+      '<section id="counters"><div class="section-inner"><div class="counters-grid">' +
+      '<div class="counter-item animate-in"><span class="counter-number" data-target="6.8">0</span><span class="counter-unit">kg</span><p class="counter-label">Peso mínimo (Aeroad CF SLX)</p></div>' +
+      '<div class="counter-item animate-in d1"><span class="counter-number" data-target="100">0</span><span class="counter-unit">+ países</span><p class="counter-label">Com entrega direta e suporte local</p></div>' +
+      '<div class="counter-item animate-in d2"><span class="counter-number" data-target="2002">0</span><span class="counter-unit"></span><p class="counter-label">Ano de fundação</p></div>' +
+      '<div class="counter-item animate-in d3"><span class="counter-number" data-target="24">0</span><span class="counter-unit">+ anos</span><p class="counter-label">De inovação em carbono</p></div>' +
+      '</div></div></section>' +
       '<section id="home-products" style="min-height:auto;padding:0 24px 100px"><div class="section-inner"><span class="section-label animate-in">Destaques</span><h2 class="section-heading animate-in d1">Modelos em Destaque</h2><div class="product-grid" id="featured-grid"></div></div></section>';
 
     brandReveal();
+    animateCounters();
 
     var grid = document.getElementById('featured-grid');
     CATALOG.products.filter(function (p) { return p.featured; }).forEach(function (p) {
@@ -241,7 +254,7 @@
     items.forEach(function (ci) {
       var p = CATALOG.products.filter(function (pr) { return pr.id === ci.id; })[0];
       if (!p) return;
-      var price = parseFloat(p.price.replace('€', '').replace(',', '.'));
+      var price = parseFloat(p.price.replace('€', '').replace(/\./g, '').replace(',', '.'));
       total += price * ci.qty;
       var item = el('div', { className: 'cart-item' });
       item.innerHTML = '<img src="assets/images/' + p.image + '" alt="' + p.name + '" style="width:100px;border-radius:12px"><div class="cart-item-info"><h4>' + p.name + '</h4><p>' + p.price + '</p><div class="qty-control"><button class="qty-btn" data-id="' + p.id + '" data-dir="-1">−</button><span>' + ci.qty + '</span><button class="qty-btn" data-id="' + p.id + '" data-dir="1">+</button></div></div><button class="cart-remove" data-id="' + p.id + '">✕</button>';
@@ -413,6 +426,31 @@
       });
     }, { threshold: 0.7 });
     spans.forEach(function (w) { wo.observe(w); });
+  }
+
+  function animateCounters() {
+    var els = document.querySelectorAll('.counter-number');
+    if (!els.length) return;
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        observer.unobserve(el);
+        var target = parseFloat(el.getAttribute('data-target'));
+        var current = 0;
+        var duration = 1500;
+        var step = Math.max(1, target / (duration / 16));
+        var decimals = target % 1 === 0 ? 0 : 1;
+        function tick() {
+          current += step;
+          if (current >= target) { el.textContent = target.toFixed(decimals).replace('.', ','); return; }
+          el.textContent = current.toFixed(decimals).replace('.', ',');
+          requestAnimationFrame(tick);
+        }
+        tick();
+      });
+    }, { threshold: 0.5 });
+    els.forEach(function (el) { observer.observe(el); });
   }
 
   /* ─── Comparison Tool ─── */
